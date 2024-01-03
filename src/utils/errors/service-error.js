@@ -10,7 +10,7 @@ class ServiceError extends Error{
         this.name = 'ServiceError',
         this.message = message,
         this.explanation = explanation,
-        this.statusCode = statusCode; 
+        this.statusCode = statusCode;
     }
 }
 

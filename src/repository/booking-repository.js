@@ -20,16 +20,21 @@ class BookingRepository{
         }
     }
 
-    async update(data, userId){
+    async update(bookingId, data){
         try {
-            const result = await Booking.update(data,{
+            await Booking.update(data,{
                 where: {
-                    id: userId
+                    id: bookingId
                 }
             });
-            return result;
+            return true;
         } catch (error) {
-            
+            throw new AppError(
+                'RepositoryError',
+                'Cannot update the Booking',
+                'There was some issue updating the booking, please try again',
+                StatusCodes.INTERNAL_SERVER_ERROR
+            );
         }
     }
 
