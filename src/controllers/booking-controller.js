@@ -15,7 +15,6 @@ const create = async (req, res) => {
             data: response
         })
     } catch (error) {
-        console.log("FROM BOOKING CONTROLLER: ", error);
         return res.status(error.statusCode).json({
             message: error.message,
             success: false,

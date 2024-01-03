@@ -11,7 +11,7 @@ class BookingService{
     async createBooking(data){
         try {
             const flightId = data.flightId;
-            let getFlightRequestURL = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;
+            const getFlightRequestURL = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;
             const response = await axios.get(getFlightRequestURL);
             const flightData = response.data.data;
             let priceOfTheFlight = flightData.price;
@@ -24,7 +24,9 @@ class BookingService{
             const totalCost = priceOfTheFlight * data.noOfSeats;
             const bookingPayload = {...data, totalCost};
             const booking = await this.bookingRepository.create(bookingPayload);
-            this.bookingRepository.update(booking.id, {total});            
+            const updateFlightRequestURL = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${booking.flightId}`;
+            await axios.patch(updateFlightRequestURL, {totalSeats: flightData.totalSeats - booking.noOfSeats})            
+            return booking;
         } catch (error) {
             if(error.name == 'RepositoryError' || error.name == 'ValidationeError'){
                 throw error;
