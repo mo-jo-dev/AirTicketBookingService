@@ -23,7 +23,7 @@ const subscribeMessage = async (channel, service, binding_key) => {
             console.log('received data');
             console.log(msg.content.toString());
             channel.ack(msg);
-        })
+        }) 
     } catch (error) {
         throw error;
     }
